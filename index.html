@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>KOReader 遥控</title>
 
 <style>
@@ -97,51 +97,42 @@ h1 {
 <div class="container">
     <h1>KOReader 遥控</h1>
 
-    <!-- 翻页 -->
     <div class="grid">
-        <button class="btn primary" onclick="send('/koreader/event/GotoViewRel/-1')">
-            ⬅ 上一页
-        </button>
-        <button class="btn primary" onclick="send('/koreader/event/GotoViewRel/1')">
-            下一页 ➡
-        </button>
+        <button class="btn primary" onclick="send('/koreader/event/GotoViewRel/-1')">⬅ 上一页</button>
+        <button class="btn primary" onclick="send('/koreader/event/GotoViewRel/1')">下一页 ➡</button>
     </div>
 
-    <!-- 前光亮度 -->
     <div class="section grid">
-        <button class="btn" onclick="send('/koreader/event/DecreaseFlIntensity/1')">
-            🔅 亮度 −
-        </button>
-        <button class="btn" onclick="send('/koreader/event/IncreaseFlIntensity/1')">
-            🔆 亮度 +
-        </button>
+        <button class="btn" onclick="send('/koreader/event/DecreaseFlIntensity/1')">🔅 亮度 −</button>
+        <button class="btn" onclick="send('/koreader/event/IncreaseFlIntensity/1')">🔆 亮度 +</button>
     </div>
 
-    <!-- 导航 -->
     <div class="section grid">
-        <button class="btn accent" onclick="send('/koreader/event/ShowToc')">
-            📑 目录
-        </button>
-        <button class="btn accent" onclick="send('/koreader/event/Home')">
-            📂 文件浏览器
-        </button>
+        <button class="btn accent" onclick="send('/koreader/event/ShowToc')">📑 目录</button>
+        <button class="btn accent" onclick="send('/koreader/event/Home')">📂 文件浏览器</button>
     </div>
 
-    <!-- 退出 -->
     <div class="section grid">
-        <button class="btn danger full" onclick="send('/koreader/event/Exit')">
-            ⏻ 退出 KOReader
-        </button>
+        <button class="btn danger full" onclick="send('/koreader/event/Exit')">⏻ 退出 KOReader</button>
     </div>
 </div>
 
-<script>
-const KOREADER_BASE = "http://172.20.10.10:8080";
+<!-- 隐藏 iframe + form（iOS 核心） -->
+<iframe name="hiddenFrame" style="display:none;"></iframe>
 
-/* Image Beacon：手机端稳定 */
+<form id="cmdForm" method="GET" target="hiddenFrame"></form>
+
+<script>
+const BASE = "http://172.20.10.10:8080";
+
 function send(path) {
-    const img = new Image();
-    img.src = KOREADER_BASE + path + "?t=" + Date.now();
+    const form = document.getElementById("cmdForm");
+    form.action = BASE + path;
+    form.submit();
+}
+</script>
+</body>
+</html>
 }
 </script>
 </body>
